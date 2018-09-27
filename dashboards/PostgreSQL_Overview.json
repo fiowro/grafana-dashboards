@@ -257,7 +257,7 @@
             ],
             "datasource": "Prometheus",
             "decimals": 0,
-            "description": "This parameter is mostly dedicated to PostgreSQL query planner because query planner is responsible to execute a query by choosing a better optimized execution path.\nThe query planner also requires some space to perform their work so this parameter helps the query planner.",
+            "description": "PostgreSQL's effective_cache_size variable tunes how much RAM you expect to be available for disk caching.  Generally adding Linux free+cached will give you a good idea.  This value is used by the query planner whether plans will fit in memory, and when defined too low, can lead to some plans rejecting certain indexes.",
             "format": "short",
             "gauge": {
                 "maxValue": 100,
@@ -274,7 +274,14 @@
             },
             "id": 86,
             "interval": null,
-            "links": [],
+            "links": [
+                      {
+                      "targetBlank": true,
+                      "title": "effective_cache_size",
+                      "type": "absolute",
+                      "url": "https://www.postgresql.org/docs/current/static/runtime-config-query.html#GUC-EFFECTIVE-CACHE-SIZE"
+                      }
+               ],
             "mappingType": 1,
             "mappingTypes": [
                 {
@@ -341,7 +348,7 @@
             ],
             "datasource": "Prometheus",
             "decimals": 2,
-            "description": "Instead of big shared memory pool, PostgreSQL has a separate process for each database connection. PostgreSQL uses this dedicated memory area for caching purpose, so its provide lots of performance gain in your system.\n\nIf we have more loads, we can set large values for shared_buffers.\nGenerally, we should set shared_buffers values up to 1/4 part of the main memory.",
+            "description": "Defines the amount of memory the database server uses for shared memory buffers.  Default is 128MB.  Guidance on tuning is 25% of RAM, but generally doesn't exceed 40%.",
             "format": "bytes",
             "gauge": {
                 "maxValue": 100,
@@ -358,7 +365,14 @@
             },
             "id": 67,
             "interval": null,
-            "links": [],
+            "links": [
+                      {
+                      "targetBlank": true,
+                      "title": "shared_buffers",
+                      "type": "absolute",
+                      "url": "https://www.postgresql.org/docs/current/static/runtime-config-resource.html#GUC-SHARED-BUFFERS"
+                      }
+               ],
             "mappingType": 1,
             "mappingTypes": [
                 {
@@ -424,7 +438,7 @@
             ],
             "datasource": "Prometheus",
             "decimals": 2,
-            "description": "This parameter defines, how much space is required for caching to write-ahead log entries. This is really very small size value but it is required to change in heavily loaded servers.",
+            "description": "The setting wal_buffers defines how much memory is used for caching the write-ahead log entries. Generally this value is small (3% of shared_buffers value), but it may need to be modified for heavily loaded servers.",
             "format": "bytes",
             "gauge": {
                 "maxValue": 100,
@@ -441,7 +455,20 @@
             },
             "id": 68,
             "interval": null,
-            "links": [],
+            "links": [
+                      {
+                      "targetBlank": true,
+                      "title": "wal_buffers",
+                      "type": "absolute",
+                      "url": "https://www.postgresql.org/docs/current/static/runtime-config-wal.html#GUC-WAL-BUFFERS"
+                      },
+                      {
+                      "targetBlank": true,
+                      "title": "shared_bufferss",
+                      "type": "absolute",
+                      "url": "https://www.postgresql.org/docs/current/static/runtime-config-resource.html#GUC-SHARED-BUFFERS"
+                      }
+                    ],
             "mappingType": 1,
             "mappingTypes": [
                 {
@@ -589,7 +616,7 @@
             ],
             "datasource": "Prometheus",
             "decimals": 2,
-            "description": "This parameter is mostly dedicated to PostgreSQL query planner because query planner is responsible to execute a query by choosing a better optimized execution path.\nThe query planner also requires some space to perform their work so this parameter helps the query planner.",
+            "description": "The maximum number of client connections allowed.  Change this value with care as there are some memory resources that are allocated on a per-client basis, so setting max_connections higher will generally increase overall PostgreSQL memory usage.",
             "format": "bytes",
             "gauge": {
                 "maxValue": 100,
@@ -606,7 +633,14 @@
             },
             "id": 70,
             "interval": null,
-            "links": [],
+            "links": [
+                      {
+                      "targetBlank": true,
+                      "title": "max_connections",
+                      "type": "absolute",
+                      "url": "https://www.postgresql.org/docs/current/static/runtime-config-connection.html#GUC-MAX-CONNECTIONS"
+                      }
+               ],
             "mappingType": 1,
             "mappingTypes": [
                 {
